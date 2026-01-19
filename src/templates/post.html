@@ -1,7 +1,9 @@
 <article>
   <div class="muted">{{ date }}</div>
   <h2 style="margin:6px 0 12px 0">{{ title }}</h2>
-  {{ content }}
+
+  {{ content | safe }}
+
   {% if cta_url %}
     <hr/>
     <div class="card">
