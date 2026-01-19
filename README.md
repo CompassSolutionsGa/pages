@@ -12,5 +12,3 @@ Overview
 
 FormHuntsman Pages is a static site built with GitHub Pages and GitHub Actions.
 It publishes form templates, industry pages, and documentation related to FormHuntsman.
-
-The site is automatically generated and deployed from this repository.

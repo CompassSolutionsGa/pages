@@ -96,7 +96,7 @@ def build_posts(cfg: Dict[str, str], env: Environment) -> List[Item]:
             title=title,
             date=date.isoformat(),
             content=content_html,
-            cta_url=cfg.get("app_url") or cfg.get("site_url"),
+            cta_url=cfg.get("app_url", "https://formhuntsman.com"),
             cta_text=meta.get("cta_text") or "Run unlimited form experiments in minutes.",
         )
 
