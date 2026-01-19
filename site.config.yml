@@ -1,0 +1,7 @@
+site_name: FormHuntsman
+site_url: https://formhuntsman.com
+author: FormHuntsman
+language: en
+rss_title: FormHuntsman Updates
+rss_description: Tips, templates, and guides to ship forms faster.
+output_dir: _site

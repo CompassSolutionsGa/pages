@@ -1,0 +1,13 @@
+<article>
+  <div class="muted">{{ date }}</div>
+  <h2 style="margin:6px 0 12px 0">{{ title }}</h2>
+  {{ content }}
+  {% if cta_url %}
+    <hr/>
+    <div class="card">
+      <h3 style="margin:0 0 6px 0">Try FormHuntsman</h3>
+      <p class="muted" style="margin:0 0 12px 0">{{ cta_text }}</p>
+      <a href="{{ cta_url }}">Open the app →</a>
+    </div>
+  {% endif %}
+</article>
