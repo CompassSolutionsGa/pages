@@ -4,7 +4,7 @@ This repository powers the FormHuntsman Pages site.
 
 ## Live sites
 
-SEO site (this repo): https://pages.formhuntsman.com
+Pages (this repo): https://pages.formhuntsman.com
 
 FormHuntsman app: https://formhuntsman.com
 

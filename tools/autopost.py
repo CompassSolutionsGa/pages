@@ -28,8 +28,7 @@ ANGLES: List[Tuple[str, str]] = [
 
 
 def load_config() -> Dict[str, Any]:
-    cfg = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8")) or {}
-    return cfg
+    return yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8")) or {}
 
 
 def read_yaml(path: pathlib.Path) -> Dict[str, Any]:
@@ -39,15 +38,10 @@ def read_yaml(path: pathlib.Path) -> Dict[str, Any]:
 
 
 def existing_slugs() -> set[str]:
-    slugs = set()
-    for p in POSTS_DIR.glob("*.md"):
-        slugs.add(p.stem)
-    return slugs
+    return {p.stem for p in POSTS_DIR.glob("*.md")}
 
 
 def pick_industry(industry_meta: Dict[str, Any]) -> Tuple[str, str, Dict[str, Any]]:
-    # industry_meta keys are slugs (e.g. "roofing"), but we need a nice display name.
-    # Prefer mapping from industries.txt if you have it; otherwise title-case the slug.
     items = []
     for slug, meta in industry_meta.items():
         if not isinstance(meta, dict):
@@ -60,16 +54,24 @@ def pick_industry(industry_meta: Dict[str, Any]) -> Tuple[str, str, Dict[str, An
 
 
 def limit_list(x: List[str], n: int) -> List[str]:
-    return [s.strip() for s in x if str(s).strip()][:n]
+    return [str(s).strip() for s in x if str(s).strip()][:n]
 
 
 def safe_text(s: str) -> str:
-    s = re.sub(r"\s+", " ", s).strip()
-    return s
+    return re.sub(r"\s+", " ", str(s)).strip()
+
+
+def y(val: str) -> str:
+    """
+    YAML-safe quoted string for frontmatter.
+    Prevents crashes when values contain ':' quotes, etc.
+    """
+    s = safe_text(val)
+    return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
 def build_post(cfg: Dict[str, Any], industry_name: str, industry_slug: str, meta: Dict[str, Any]) -> Tuple[str, str]:
-    app_url = (cfg.get("app_url") or "https://formhuntsman.com/").rstrip("/") + "/"
+    app_url = (cfg.get("app_url") or "https://formhuntsman.com").rstrip("/") + "/"
 
     fields = limit_list(meta.get("fields", []) or [], 8)
     questions = limit_list(meta.get("questions", []) or [], 6)
@@ -94,7 +96,6 @@ def build_post(cfg: Dict[str, Any], industry_name: str, industry_slug: str, meta
         f"Practical {industry_name.lower()} form tips: suggested fields, example questions, and A/B tests you can run in FormHuntsman."
     )
 
-    # Small variations so posts don’t look identical
     intro_lines = [
         f"If you rely on inbound leads, your {industry_name.lower()} contact form is one of your highest-impact pages.",
         f"A great {industry_name.lower()} service page can still underperform if the lead form creates friction.",
@@ -103,11 +104,11 @@ def build_post(cfg: Dict[str, Any], industry_name: str, industry_slug: str, meta
     intro = random.choice(intro_lines)
 
     body = f"""---
-title: {title}
+title: {y(title)}
 date: {date}
-description: {description}
-cta_url: {app_url}
-cta_text: Start scanning and testing forms in minutes.
+description: {y(description)}
+cta_url: {y(app_url)}
+cta_text: {y("Start scanning and testing forms in minutes.")}
 ---
 
 {intro}
