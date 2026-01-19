@@ -5,7 +5,7 @@ import pathlib
 import shutil
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import markdown
 import yaml
@@ -30,7 +30,7 @@ class Item:
 
 
 def load_config() -> Dict[str, str]:
-    cfg = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8"))
+    cfg = yaml.safe_load(CONFIG_PATH.read_text(encoding="utf-8")) or {}
     if not cfg.get("site_url"):
         raise ValueError("site_url is required in site.config.yml")
     return cfg
@@ -76,11 +76,19 @@ def load_csv_list(path: pathlib.Path) -> List[str]:
     return items
 
 
+def get_app_url(cfg: Dict[str, str]) -> str:
+    # Always return a usable URL for CTAs
+    return (cfg.get("app_url") or "https://formhuntsman.com").rstrip("/")
+
+
 def build_posts(cfg: Dict[str, str], env: Environment) -> List[Item]:
     items: List[Item] = []
+    app_url = get_app_url(cfg)
+
     for md_file in sorted(CONTENT_POSTS_DIR.glob("*.md")):
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
+
         title = str(meta.get("title") or md_file.stem)
         description = str(meta.get("description") or "")
         date_str = str(meta.get("date") or dt.date.today().isoformat())
@@ -91,12 +99,13 @@ def build_posts(cfg: Dict[str, str], env: Environment) -> List[Item]:
         canonical = cfg["site_url"].rstrip("/") + url
 
         content_html = md_to_html(body)
+
         post_t = env.get_template("post.html")
         body_html = post_t.render(
             title=title,
             date=date.isoformat(),
             content=content_html,
-            cta_url=cfg.get("app_url", "https://formhuntsman.com"),
+            cta_url=meta.get("cta_url") or app_url,
             cta_text=meta.get("cta_text") or "Run unlimited form experiments in minutes.",
         )
 
@@ -127,17 +136,27 @@ def build_pseo(cfg: Dict[str, str], env: Environment) -> List[Item]:
 
     pages: List[Item] = []
     today = dt.date.today()
+    app_url = get_app_url(cfg)
 
     for industry in industries:
-        # One landing page per industry
         title = f"{industry} form templates"
-        description = f"Ready-to-copy form templates for {industry} teams. Examples, fields to include, and a fast way to test changes."
+        description = (
+            f"Ready-to-copy form templates for {industry} teams. "
+            "Examples, fields to include, and a fast way to test changes."
+        )
         slug = slugify(industry)
         url = f"/templates/{slug}/"
         canonical = cfg["site_url"].rstrip("/") + url
 
         bullets = "\n".join([f"- {uc}" for uc in use_cases[:8]])
-        md_body = f"""## What you will find here\n\n{description}\n\n## Popular use cases\n\n{bullets}\n\n## Want to test faster?\n\nUse FormHuntsman to run A/B tests on your form CTAs and layouts without rebuilding your site."""
+        md_body = (
+            "## What you will find here\n\n"
+            f"{description}\n\n"
+            "## Popular use cases\n\n"
+            f"{bullets}\n\n"
+            "## Want to test faster?\n\n"
+            "Use FormHuntsman to run A/B tests on your form CTAs and layouts without rebuilding your site."
+        )
         content_html = md_to_html(md_body)
 
         post_t = env.get_template("post.html")
@@ -145,7 +164,7 @@ def build_pseo(cfg: Dict[str, str], env: Environment) -> List[Item]:
             title=title,
             date=today.isoformat(),
             content=content_html,
-            cta_url=meta.get("cta_url") or cfg.get("app_url") or cfg.get("site_url"),
+            cta_url=app_url,
             cta_text="Open FormHuntsman and launch a form experiment.",
         )
 
@@ -177,12 +196,10 @@ def write_item(out_dir: pathlib.Path, item: Item) -> None:
 def write_index(cfg: Dict[str, str], env: Environment, posts: List[Item], pseo_pages: List[Item], out_dir: pathlib.Path) -> None:
     index_t = env.get_template("index.html")
     body = index_t.render(
-        posts=[{
-            "title": p.title,
-            "description": p.description,
-            "url": p.url,
-            "date": p.date.isoformat(),
-        } for p in posts[:10]],
+        posts=[
+            {"title": p.title, "description": p.description, "url": p.url, "date": p.date.isoformat()}
+            for p in posts[:10]
+        ],
         pseo_pages=[{"title": x.title, "url": x.url} for x in pseo_pages[:30]],
         base_url=cfg["site_url"].rstrip("/"),
     )
@@ -206,7 +223,10 @@ def write_index(cfg: Dict[str, str], env: Environment, posts: List[Item], pseo_p
 
 
 def write_robots(out_dir: pathlib.Path) -> None:
-    (out_dir / "robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n", encoding="utf-8")
+    (out_dir / "robots.txt").write_text(
+        "User-agent: *\nAllow: /\nSitemap: /sitemap.xml\n",
+        encoding="utf-8",
+    )
 
 
 def write_sitemap(cfg: Dict[str, str], items: List[Item], out_dir: pathlib.Path) -> None:
