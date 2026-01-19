@@ -8,9 +8,10 @@
 {% endfor %}
 
 <h2>Templates by industry</h2>
-<p class="muted">Programmatic landing pages you can scale up by editing CSV files in <code>data/</code>.</p>
+<p class="muted">Browse industry-specific form templates with field suggestions, example questions, and A/B test ideas you can run in FormHuntsman.</p>
 <ul>
 {% for page in pseo_pages %}
   <li><a href="{{ base_url }}{{ page.url }}">{{ page.title }}</a></li>
 {% endfor %}
 </ul>
+
