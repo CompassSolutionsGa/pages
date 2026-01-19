@@ -145,7 +145,7 @@ def build_pseo(cfg: Dict[str, str], env: Environment) -> List[Item]:
             title=title,
             date=today.isoformat(),
             content=content_html,
-            cta_url=cfg.get("site_url"),
+            cta_url=meta.get("cta_url") or cfg.get("app_url") or cfg.get("site_url"),
             cta_text="Open FormHuntsman and launch a form experiment.",
         )
 
