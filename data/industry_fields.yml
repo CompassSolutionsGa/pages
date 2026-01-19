@@ -16,11 +16,11 @@ roofing:
     - Do you know your roof’s approximate age?
     - Do you want repair options, replacement options, or both?
   tests:
-    - Test CTA: "Get a free roof inspection" vs "Request a quote"
-    - Test showing "Insurance help available" badge vs no badge
+    - "Test CTA: Get a free roof inspection vs Request a quote"
+    - 'Test showing "Insurance help available" badge vs no badge'
     - Test 3-field quick form vs full detailed form
     - Test asking for address early vs after contact info
-    - Test timeline dropdown vs free-text "When do you need this?"
+    - 'Test timeline dropdown vs free-text "When do you need this?"'
 
 plumbing:
   fields:
@@ -39,11 +39,11 @@ plumbing:
     - When did it start?
     - Any troubleshooting already attempted?
   tests:
-    - Test CTA: "Get a plumber today" vs "Schedule service"
+    - "Test CTA: Get a plumber today vs Schedule service"
     - Test urgency selector at top vs mid-form
-    - Test "Text me a quote" option vs call-only
+    - 'Test "Text me a quote" option vs call-only'
     - Test showing service areas list vs hidden
-    - Test adding "Emergency response" trust line vs none
+    - 'Test adding "Emergency response" trust line vs none'
 
 dentistry:
   fields:
@@ -62,9 +62,9 @@ dentistry:
     - Do you have dental insurance? (optional)
     - What times work best for you?
   tests:
-    - Test CTA: "Book an appointment" vs "Request availability"
+    - "Test CTA: Book an appointment vs Request availability"
     - Test asking insurance info (optional) vs not asking at all
-    - Test "New patient special" mention vs no mention
+    - 'Test "New patient special" mention vs no mention'
     - Test shorter form vs appointment-type-first flow
     - Test offering call-back within 15 minutes vs generic follow-up
 
@@ -85,9 +85,9 @@ chiropractor:
     - Have you seen a chiropractor before?
     - Are you looking for pain relief, mobility improvement, or both?
   tests:
-    - Test CTA: "Schedule a consultation" vs "Get relief today"
+    - "Test CTA: Schedule a consultation vs Get relief today"
     - Test pain scale slider vs dropdown vs no pain scale
-    - Test "New patient offer" line vs none
+    - 'Test "New patient offer" line vs none'
     - Test injury type question early vs later
     - Test showing testimonials near form vs below fold
 
@@ -108,11 +108,11 @@ law-firm:
     - Is there an upcoming court date or deadline?
     - What’s the best way and time to reach you?
   tests:
-    - Test CTA: "Get a free case review" vs "Talk to an attorney"
+    - "Test CTA: Get a free case review vs Talk to an attorney"
     - Test allowing text-first contact vs call-only
     - Test case-type buttons vs dropdown
     - Test short form + follow-up intake vs long form
-    - Test adding urgency prompt ("Any deadlines?") vs none
+    - 'Test adding urgency prompt ("Any deadlines?") vs none'
 
 real-estate:
   fields:
@@ -133,11 +133,11 @@ real-estate:
     - Are you already pre-approved for financing?
     - Any must-haves (beds/baths, lot size, school zone, etc.)?
   tests:
-    - Test CTA: "Get matched with listings" vs "Talk to an agent"
+    - "Test CTA: Get matched with listings vs Talk to an agent"
     - Test buyer/seller choice as buttons vs dropdown
     - Test asking budget early vs later
     - Test multi-step intake vs single long form
-    - Test adding "Get alerts by text" option vs email-only
+    - 'Test adding "Get alerts by text" option vs email-only'
 
 fitness-studio:
   fields:
@@ -156,11 +156,11 @@ fitness-studio:
     - What days/times work best?
     - Any injuries or limitations we should know? (optional)
   tests:
-    - Test CTA: "Claim a free trial" vs "Get class schedule"
+    - "Test CTA: Claim a free trial vs Get class schedule"
     - Test goal buttons vs dropdown
     - Test asking frequency (per week) vs not asking
     - Test adding social proof near CTA vs none
-    - Test "Text me the schedule" option vs email-only
+    - 'Test "Text me the schedule" option vs email-only'
 
 restaurant:
   fields:
@@ -180,11 +180,11 @@ restaurant:
     - Any dietary restrictions or special requests?
     - What’s the best way to confirm with you?
   tests:
-    - Test CTA: "Reserve a table" vs "Check availability"
+    - "Test CTA: Reserve a table vs Check availability"
     - Test date/time picker vs simple dropdowns
     - Test showing peak hours warning vs none
     - Test separating catering form from reservation form
-    - Test adding "Response within X minutes" promise vs none
+    - 'Test adding "Response within X minutes" promise vs none'
 
 nonprofit:
   fields:
@@ -203,8 +203,8 @@ nonprofit:
     - Any skills you’d like to contribute? (optional)
     - What’s the best way to follow up with you?
   tests:
-    - Test CTA: "Volunteer now" vs "Get involved"
+    - "Test CTA: Volunteer now vs Get involved"
     - Test multi-step flow (choose interest first) vs single form
     - Test adding impact stats near form vs none
     - Test optional phone field vs required phone
-    - Test shorter message box vs longer “tell us more” prompt
+    - 'Test shorter message box vs longer "tell us more" prompt'
