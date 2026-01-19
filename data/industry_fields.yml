@@ -1,0 +1,210 @@
+roofing:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Property address or ZIP code
+    - Service needed (repair, replacement, inspection)
+    - Roof type (shingle, metal, tile, flat)
+    - Issue type (leak, storm damage, age, missing shingles)
+    - Timeline (ASAP, 1-2 weeks, 30+ days)
+    - Preferred contact method (call/text/email)
+  questions:
+    - What problem are you seeing (leak, missing shingles, sagging, etc.)?
+    - When did you first notice it?
+    - Is this storm-related damage?
+    - Do you know your roof’s approximate age?
+    - Do you want repair options, replacement options, or both?
+  tests:
+    - Test CTA: "Get a free roof inspection" vs "Request a quote"
+    - Test showing "Insurance help available" badge vs no badge
+    - Test 3-field quick form vs full detailed form
+    - Test asking for address early vs after contact info
+    - Test timeline dropdown vs free-text "When do you need this?"
+
+plumbing:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Service category (leak, clog, water heater, toilet, drain)
+    - Urgency (emergency, today, this week)
+    - Location / ZIP code
+    - Best time to contact
+    - Preferred contact method (call/text)
+  questions:
+    - What’s the issue (leak, clog, no hot water, low pressure)?
+    - Is water currently leaking or causing damage?
+    - Where is the problem located (kitchen, bathroom, basement)?
+    - When did it start?
+    - Any troubleshooting already attempted?
+  tests:
+    - Test CTA: "Get a plumber today" vs "Schedule service"
+    - Test urgency selector at top vs mid-form
+    - Test "Text me a quote" option vs call-only
+    - Test showing service areas list vs hidden
+    - Test adding "Emergency response" trust line vs none
+
+dentistry:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Appointment type (cleaning, consultation, emergency, cosmetic)
+    - New patient? (yes/no)
+    - Insurance provider (optional)
+    - Preferred days/times
+    - Location preference (if multiple offices)
+  questions:
+    - Are you a new patient?
+    - What’s the reason for your visit?
+    - Are you experiencing pain or swelling?
+    - Do you have dental insurance? (optional)
+    - What times work best for you?
+  tests:
+    - Test CTA: "Book an appointment" vs "Request availability"
+    - Test asking insurance info (optional) vs not asking at all
+    - Test "New patient special" mention vs no mention
+    - Test shorter form vs appointment-type-first flow
+    - Test offering call-back within 15 minutes vs generic follow-up
+
+chiropractor:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Primary concern (back, neck, shoulder, sciatica, headache)
+    - Injury type (work, auto, sports, chronic)
+    - Pain level (1-10)
+    - New patient? (yes/no)
+    - Preferred appointment time
+  questions:
+    - Where are you feeling pain or discomfort?
+    - Did this start from an injury or develop over time?
+    - How long have you had symptoms?
+    - Have you seen a chiropractor before?
+    - Are you looking for pain relief, mobility improvement, or both?
+  tests:
+    - Test CTA: "Schedule a consultation" vs "Get relief today"
+    - Test pain scale slider vs dropdown vs no pain scale
+    - Test "New patient offer" line vs none
+    - Test injury type question early vs later
+    - Test showing testimonials near form vs below fold
+
+law-firm:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Case type (injury, criminal, family, immigration, civil)
+    - City / ZIP code
+    - Best time to contact
+    - Preferred contact method (call/text/email)
+    - Brief case summary (optional)
+  questions:
+    - What type of legal help do you need?
+    - What happened (high-level summary)?
+    - When did this occur?
+    - Is there an upcoming court date or deadline?
+    - What’s the best way and time to reach you?
+  tests:
+    - Test CTA: "Get a free case review" vs "Talk to an attorney"
+    - Test allowing text-first contact vs call-only
+    - Test case-type buttons vs dropdown
+    - Test short form + follow-up intake vs long form
+    - Test adding urgency prompt ("Any deadlines?") vs none
+
+real-estate:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - I am a (buyer, seller, renter, investor)
+    - Property type (single-family, condo, multifamily, land)
+    - Location / ZIP code
+    - Budget or price range
+    - Timeline (ASAP, 30-60 days, 3-6 months, just browsing)
+    - Pre-approved? (yes/no)
+    - Preferred contact method (call/text/email)
+  questions:
+    - Are you buying, selling, renting, or investing?
+    - What area(s) are you focused on?
+    - What’s your timeline to move or list?
+    - Are you already pre-approved for financing?
+    - Any must-haves (beds/baths, lot size, school zone, etc.)?
+  tests:
+    - Test CTA: "Get matched with listings" vs "Talk to an agent"
+    - Test buyer/seller choice as buttons vs dropdown
+    - Test asking budget early vs later
+    - Test multi-step intake vs single long form
+    - Test adding "Get alerts by text" option vs email-only
+
+fitness-studio:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Goal (weight loss, strength, classes, personal training)
+    - Experience level (beginner, intermediate, advanced)
+    - Preferred schedule (mornings, evenings, weekends)
+    - Interested in trial? (yes/no)
+    - Location (if multiple)
+  questions:
+    - What’s your main goal right now?
+    - What type of training do you prefer (classes, 1:1, open gym)?
+    - How often do you want to work out per week?
+    - What days/times work best?
+    - Any injuries or limitations we should know? (optional)
+  tests:
+    - Test CTA: "Claim a free trial" vs "Get class schedule"
+    - Test goal buttons vs dropdown
+    - Test asking frequency (per week) vs not asking
+    - Test adding social proof near CTA vs none
+    - Test "Text me the schedule" option vs email-only
+
+restaurant:
+  fields:
+    - Full name
+    - Phone number
+    - Email (optional)
+    - Request type (reservation, catering, private event)
+    - Party size
+    - Date
+    - Time
+    - Dietary notes (optional)
+    - Preferred contact method
+  questions:
+    - Are you booking a reservation, catering, or an event?
+    - What date/time are you looking for?
+    - How many guests?
+    - Any dietary restrictions or special requests?
+    - What’s the best way to confirm with you?
+  tests:
+    - Test CTA: "Reserve a table" vs "Check availability"
+    - Test date/time picker vs simple dropdowns
+    - Test showing peak hours warning vs none
+    - Test separating catering form from reservation form
+    - Test adding "Response within X minutes" promise vs none
+
+nonprofit:
+  fields:
+    - Full name
+    - Email
+    - Phone (optional)
+    - Interest type (donate, volunteer, partner, attend)
+    - Location / ZIP code (optional)
+    - Availability (for volunteers)
+    - Skills / interests (optional)
+    - Message (optional)
+  questions:
+    - How would you like to get involved (donate, volunteer, partner)?
+    - What causes or programs interest you most?
+    - If volunteering: what days/times are you available?
+    - Any skills you’d like to contribute? (optional)
+    - What’s the best way to follow up with you?
+  tests:
+    - Test CTA: "Volunteer now" vs "Get involved"
+    - Test multi-step flow (choose interest first) vs single form
+    - Test adding impact stats near form vs none
+    - Test optional phone field vs required phone
+    - Test shorter message box vs longer “tell us more” prompt

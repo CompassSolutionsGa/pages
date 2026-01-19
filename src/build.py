@@ -5,7 +5,7 @@ import pathlib
 import shutil
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Any
 
 import markdown
 import yaml
@@ -81,6 +81,29 @@ def get_app_url(cfg: Dict[str, str]) -> str:
     return (cfg.get("app_url") or "https://formhuntsman.com").rstrip("/")
 
 
+def load_industry_fields() -> Dict[str, Any]:
+    """
+    Optional file:
+      data/industry_fields.yml
+
+    Expected structure (keyed by industry slug):
+      roofing:
+        fields:
+          - ...
+        questions:
+          - ...
+        tests:
+          - ...
+    """
+    path = DATA_DIR / "industry_fields.yml"
+    if not path.exists():
+        return {}
+    try:
+        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {}
+
+
 def build_posts(cfg: Dict[str, str], env: Environment) -> List[Item]:
     items: List[Item] = []
     app_url = get_app_url(cfg)
@@ -134,6 +157,8 @@ def build_pseo(cfg: Dict[str, str], env: Environment) -> List[Item]:
     industries = load_csv_list(DATA_DIR / "industries.txt")
     use_cases = load_csv_list(DATA_DIR / "use_cases.txt")
 
+    industry_meta = load_industry_fields()
+
     pages: List[Item] = []
     today = dt.date.today()
     app_url = get_app_url(cfg)
@@ -141,22 +166,73 @@ def build_pseo(cfg: Dict[str, str], env: Environment) -> List[Item]:
     for industry in industries:
         title = f"{industry} form templates"
         description = (
-            f"Ready-to-copy form templates for {industry} teams. "
-            "Examples, fields to include, and a fast way to test changes."
+            f"Browse {industry}-specific form templates with field suggestions, example questions, "
+            "and A/B test ideas you can run in FormHuntsman."
         )
         slug = slugify(industry)
         url = f"/templates/{slug}/"
         canonical = cfg["site_url"].rstrip("/") + url
 
-        bullets = "\n".join([f"- {uc}" for uc in use_cases[:8]])
-        md_body = (
-            "## What you will find here\n\n"
-            f"{description}\n\n"
-            "## Popular use cases\n\n"
-            f"{bullets}\n\n"
-            "## Want to test faster?\n\n"
-            "Use FormHuntsman to run A/B tests on your form CTAs and layouts without rebuilding your site."
-        )
+        # Pull richer content if present
+        meta = industry_meta.get(slug, {}) if isinstance(industry_meta, dict) else {}
+        fields = meta.get("fields", []) if isinstance(meta, dict) else []
+        questions = meta.get("questions", []) if isinstance(meta, dict) else []
+        tests = meta.get("tests", []) if isinstance(meta, dict) else []
+
+        # Fallbacks so pages are never empty
+        if not fields:
+            fields = [
+                "Name",
+                "Email or phone",
+                "Service needed",
+                "Location / ZIP code",
+                "Best time to contact",
+            ]
+
+        if not questions:
+            questions = [
+                "What are you trying to accomplish?",
+                "When do you need this done?",
+                "Any special requirements or constraints?",
+            ]
+
+        if not tests:
+            # Use your use_cases list as a generic fallback for test ideas
+            if use_cases:
+                tests = use_cases[:6]
+            else:
+                tests = [
+                    "Test a shorter form vs a longer form",
+                    "Test CTA text: “Get a quote” vs “Request pricing”",
+                    "Test phone-first vs email-first ordering",
+                ]
+
+        fields_md = "\n".join([f"- {f}" for f in fields])
+        questions_md = "\n".join([f"- {q}" for q in questions])
+        tests_md = "\n".join([f"- {t}" for t in tests])
+
+        md_body = f"""
+## What this page includes
+
+Use this as a quick starting point for building a higher-converting **{industry}** lead form: the best fields to ask for, example questions, and simple tests that improve conversion without redesigning your whole site.
+
+## Recommended form fields
+
+{fields_md}
+
+## Example questions to include
+
+{questions_md}
+
+## A/B test ideas worth trying
+
+{tests_md}
+
+## Run these tests with FormHuntsman
+
+FormHuntsman helps you **scan existing pages**, **track form changes over time**, and **ship experiments faster** without rebuilding your site.
+""".strip()
+
         content_html = md_to_html(md_body)
 
         post_t = env.get_template("post.html")
@@ -164,7 +240,7 @@ def build_pseo(cfg: Dict[str, str], env: Environment) -> List[Item]:
             title=title,
             date=today.isoformat(),
             content=content_html,
-            cta_url=app_url,
+            cta_url=app_url,  # ✅ always goes to the app
             cta_text="Open FormHuntsman and launch a form experiment.",
         )
 
